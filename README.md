@@ -1,5 +1,7 @@
 # airy_server_ollama
 
+Caso utilize placa de vídeo nvidia, baixar o software NVIDIA CUDA
+
 pip install uvicorn fastapi httpx
 
 # Terminal 1
