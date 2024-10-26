@@ -3,6 +3,7 @@
 Caso utilize placa de vídeo nvidia, baixar o software NVIDIA CUDA;
 Script desenvolvido para o llama3.2:1b, trocar caso necessário;
 
+# Lib necessárias
 pip install uvicorn fastapi httpx psutil gputil
 
 # Terminal 1
