@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat API - Modelo Local</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #218838;
+    }
+
+    .response {
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #333;
+    }
+
+    .loading {
+      font-size: 0.9em;
+      color: #777;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chat com API Local</h1>
+    <input type="text" id="userMessage" placeholder="Digite sua mensagem" />
+    <button id="sendButton" onclick="sendMessage()">Enviar</button>
+    <div class="loading" id="loading">Carregando...</div>
+    <div class="response" id="responseArea"></div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const userMessage = document.getElementById("userMessage").value;
+      const responseArea = document.getElementById("responseArea");
+      const sendButton = document.getElementById("sendButton");
+      const loading = document.getElementById("loading");
+
+      if (!userMessage) {
+        responseArea.textContent = "Por favor, digite uma mensagem.";
+        return;
+      }
+
+      // Desativa o botão e exibe a animação de carregamento
+      sendButton.disabled = true;
+      loading.style.display = "block";
+      responseArea.textContent = "";
+
+      try {
+        const response = await fetch("http://localhost:8000/chat/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: userMessage }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          responseArea.textContent = "Resposta: " + data.response;
+        } else {
+          responseArea.textContent = `Erro: ${response.status} - ${response.statusText}`;
+        }
+      } catch (error) {
+        responseArea.textContent = "Erro ao conectar com a API.";
+        console.error("Erro:", error);
+      } finally {
+        // Reativa o botão e oculta a animação de carregamento
+        sendButton.disabled = false;
+        loading.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
