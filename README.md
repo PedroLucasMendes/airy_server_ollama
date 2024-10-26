@@ -3,7 +3,7 @@
 Caso utilize placa de vídeo nvidia, baixar o software NVIDIA CUDA;
 Script desenvolvido para o llama3.2:1b, trocar caso necessário;
 
-pip install uvicorn fastapi httpx
+pip install uvicorn fastapi httpx psutil gputil
 
 # Terminal 1
 python -m http.server 8080
