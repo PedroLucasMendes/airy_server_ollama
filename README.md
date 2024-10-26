@@ -1,6 +1,7 @@
 # airy_server_ollama
 
 Caso utilize placa de vídeo nvidia, baixar o software NVIDIA CUDA;
+
 Script desenvolvido para o llama3.2:1b, trocar caso necessário;
 
 # Lib necessárias
